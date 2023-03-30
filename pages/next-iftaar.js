@@ -62,7 +62,7 @@ export default function NextIftaar() {
                 <p>{host}</p>
 
                 <Link href="/timeline">
-                    <p>- checkout the whole timeline -</p>
+                    <p>- click here for the timeline -</p>
                 </Link>
             </div>
             <Footer/>
