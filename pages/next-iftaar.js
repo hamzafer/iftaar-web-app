@@ -4,11 +4,17 @@ import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import Footer from "./Components/Footer";
 import Image from "next/image";
+import Loader from "./Components/Loader";
 
 export default function NextIftaar() {
     const host = "Ibnet";
     const image = "/ibnet.jpg";
     const [iftaarData, setIftaarData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     useEffect(() => {
         async function fetchIftaarData() {
@@ -16,6 +22,7 @@ export default function NextIftaar() {
                 const response = await fetch('/api/iftaarData');
                 const data = await response.json();
                 setIftaarData(data);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching iftaar data:', error);
             }
@@ -43,28 +50,31 @@ export default function NextIftaar() {
                         <p>Home</p>
                     </span>
             </Link>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                <h1>Next Iftaar : {hostDate} | {day}</h1>
-                <Image
-                    src={image}
-                    alt="Next Iftaar"
-                    width={200}
-                    height={200}
-                    style={{borderRadius: "50%", width: "200px", height: "200px"}}
-                />
-                <p>{host}</p>
+            {isLoading ? (
+                    <Loader/>
+                ) :
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        alignItems: "center",
+                    }}
+                >
+                    <h1>Next Iftaar : {hostDate} | {day}</h1>
+                    <Image
+                        src={image}
+                        alt="Next Iftaar"
+                        width={200}
+                        height={200}
+                        style={{borderRadius: "50%", width: "200px", height: "200px"}}
+                    />
+                    <p>{host}</p>
 
-                <Link href="/timeline">
-                    <p>- click here for the timeline -</p>
-                </Link>
-            </div>
+                    <Link href="/timeline">
+                        <p>- click here for the timeline -</p>
+                    </Link>
+                </div>}
             <Footer/>
         </div>
     );
