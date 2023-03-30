@@ -1,22 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import Footer from "./Components/Footer";
+import stylesT from '../styles/Timeline.module.css'
 
 export default function Timeline() {
-    const iftaarData = [
-        {id: 1, name: 'Saad', date: 'TBD', location: 'Chiniot'},
-        {id: 2, name: 'Ibnet', date: 'April 1, 2023', location: `Ibnet's home`},
-        {id: 3, name: 'Sohaib', date: 'March 28, 2023', location: `Sohaib's home`},
-        {id: 4, name: 'Chuchu', date: 'TBD', location: `Chuchu's home`},
-        {id: 5, name: 'Ahnuf + Munir', date: 'TBD', location: `TBD`},
-        {id: 6, name: 'Afnan', date: 'TBD', location: `Afnan's home`},
-        {id: 7, name: 'Kagge', date: 'TBD', location: `Kagge's home`},
-        {id: 8, name: 'Yasir', date: 'TBD', location: `Yasir's home`},
-        {id: 9, name: 'TZ + Hamza Bhai', date: 'TBD', location: `Four seasons`},
-        {id: 10, name: 'Jamil', date: 'TBD', location: `Jamil's home`},
-    ];
+    const [iftaarData, setIftaarData] = useState([]);
+
+    useEffect(() => {
+        async function fetchIftaarData() {
+            try {
+                const response = await fetch('/api/iftaarData');
+                const data = await response.json();
+                setIftaarData(data);
+            } catch (error) {
+                console.error('Error fetching iftaar data:', error);
+            }
+        }
+
+        fetchIftaarData();
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -43,8 +47,8 @@ export default function Timeline() {
                         </tr>
                         </thead>
                         <tbody>
-                        {iftaarData.map(({id, name, date, location}) => (
-                            <tr key={name}>
+                        {iftaarData.map(({id, name, date, location, done}) => (
+                            <tr key={name} className={done ? stylesT["row-done"] : null}>
                                 <td style={{border: '1px solid white', padding: '10px'}}>{id}</td>
                                 <td style={{border: '1px solid white', padding: '10px'}}>{name}</td>
                                 <td style={{border: '1px solid white', padding: '10px'}}>{date}</td>
