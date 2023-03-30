@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import Footer from "./Components/Footer";
+import Image from "next/image";
 
 export default function NextIftaar() {
     const host = 'Hasan bin Tariq';
@@ -22,12 +23,12 @@ export default function NextIftaar() {
             </Link>
             <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
                 <h1>Next Iftaar</h1>
-                <img src={image} alt="Next Iftaar" style={{borderRadius: '50%', width: '200px', height: '200px'}}/>
+                <Image src={image} alt="Next Iftaar" width={200} height={200} style={{borderRadius: '50%', width: '200px', height: '200px'}}/>
                 <p>{host}</p>
 
-                <a href="/timeline">
+                <Link href="/timeline">
                     <p>- checkout the whole timeline -</p>
-                </a>
+                </Link>
             </div>
             <Footer/>
         </div>

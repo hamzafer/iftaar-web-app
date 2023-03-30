@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Footer from "./Components/Footer";
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -16,15 +17,15 @@ export default function Home() {
                 </h1>
                 <br/>
                 <div className={styles.grid}>
-                    <a href="/timeline" className={styles.card}>
+                    <Link href="/timeline" className={styles.card}>
                         <h2>View Timeline &rarr;</h2>
                         <p>Checkout the whole Ramadan Iftaar timeline!</p>
-                    </a>
+                    </Link>
 
-                    <a href="/next-iftaar" className={styles.card}>
+                    <Link href="/next-iftaar" className={styles.card}>
                         <h2>View Next Iftaar &rarr;</h2>
                         <p>See who is next in the list to host!</p>
-                    </a>
+                    </Link>
                 </div>
             </main>
             <Footer/>
