@@ -4,9 +4,11 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import Footer from "./Components/Footer";
 import stylesT from '../styles/Timeline.module.css'
+import Loader from "./Components/Loader";
 
 export default function Timeline() {
     const [iftaarData, setIftaarData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function fetchIftaarData() {
@@ -14,6 +16,7 @@ export default function Timeline() {
                 const response = await fetch('/api/iftaarData');
                 const data = await response.json();
                 setIftaarData(data);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching iftaar data:', error);
             }
@@ -34,31 +37,34 @@ export default function Timeline() {
                         <p>Home</p>
                     </span>
             </Link>
-            <div style={{textAlign: 'center'}}>
-                <h1>Timeline</h1>
-                <div style={{display: 'inline-block', border: '1px solid white', padding: '20px'}}>
-                    <table style={{borderCollapse: 'collapse', margin: 'auto'}}>
-                        <thead>
-                        <tr>
-                            <th style={{border: '1px solid white', padding: '10px'}}>Sr.</th>
-                            <th style={{border: '1px solid white', padding: '10px'}}>Name</th>
-                            <th style={{border: '1px solid white', padding: '10px'}}>Date</th>
-                            <th style={{border: '1px solid white', padding: '10px'}}>Location</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {iftaarData.map(({id, name, date, location, done}) => (
-                            <tr key={name} className={done ? stylesT["row-done"] : null}>
-                                <td style={{border: '1px solid white', padding: '10px'}}>{id}</td>
-                                <td style={{border: '1px solid white', padding: '10px'}}>{name}</td>
-                                <td style={{border: '1px solid white', padding: '10px'}}>{date}</td>
-                                <td style={{border: '1px solid white', padding: '10px'}}>{location}</td>
+            {isLoading ? (
+                    <Loader/>
+                ) :
+                <div style={{textAlign: 'center'}}>
+                    <h1>Timeline</h1>
+                    <div style={{display: 'inline-block', border: '1px solid white', padding: '20px'}}>
+                        <table style={{borderCollapse: 'collapse', margin: 'auto'}}>
+                            <thead>
+                            <tr>
+                                <th style={{border: '1px solid white', padding: '10px'}}>Sr.</th>
+                                <th style={{border: '1px solid white', padding: '10px'}}>Name</th>
+                                <th style={{border: '1px solid white', padding: '10px'}}>Date</th>
+                                <th style={{border: '1px solid white', padding: '10px'}}>Location</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                            </thead>
+                            <tbody>
+                            {iftaarData.map(({id, name, date, location, done}) => (
+                                <tr key={name} className={done ? stylesT["row-done"] : null}>
+                                    <td style={{border: '1px solid white', padding: '10px'}}>{id}</td>
+                                    <td style={{border: '1px solid white', padding: '10px'}}>{name}</td>
+                                    <td style={{border: '1px solid white', padding: '10px'}}>{date}</td>
+                                    <td style={{border: '1px solid white', padding: '10px'}}>{location}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>}
             <br/>
             <Footer/>
         </div>
