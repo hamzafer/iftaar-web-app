@@ -29,4 +29,4 @@ A simple web app built with Next.js to display the timeline of Iftaar schedules 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the DevClub License - see the [DevClub](https://devclubm.me/) for details.
