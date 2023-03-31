@@ -44,7 +44,7 @@ export default function Gallery() {
         const params = {
             Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
             Key: key,
-            Expires: 60 * 5, // URL expires in 5 minutes
+            Expires: 60 * 5, // URL expires in 5 minutes.
         };
         return await s3.getSignedUrlPromise("getObject", params);
     };
