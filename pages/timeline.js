@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import Footer from "./Components/Footer";
+import Footer from "./components/Footer";
 import stylesT from '../styles/Timeline.module.css'
-import Loader from "./Components/Loader";
+import Loader from "./components/Loader";
 
 export default function Timeline() {
     const [iftaarData, setIftaarData] = useState([]);
