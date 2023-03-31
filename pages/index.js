@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 
 export default function Home() {
     const [isDesktop, setIsDesktop] = useState(false);
+    const newFeature = true;
 
     useEffect(() => {
         setIsDesktop(window.innerWidth > 768); // set to true if screen width is greater than 768px (desktop)
@@ -51,6 +52,16 @@ export default function Home() {
                     <Link href="/next-iftaar" className={styles.card}>
                         <h2>View Next Iftaar &rarr;</h2>
                         <p>See who is next in the list to host!</p>
+                    </Link>
+
+                    <Link href="/gallery" className={styles.card}>
+                        <h2>Gallery &rarr;</h2>
+                        <p>See the dump!</p>
+                        <br/>
+                        {newFeature && <span
+                            style={{backgroundColor: "blue", color: "white", padding: "5px", borderRadius: "5px"}}>
+                            NEW
+                        </span>}
                     </Link>
                 </div>
             </main>
