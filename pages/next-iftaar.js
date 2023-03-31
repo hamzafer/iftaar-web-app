@@ -2,9 +2,9 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
-import Footer from "./Components/Footer";
+import Footer from "./components/Footer";
 import Image from "next/image";
-import Loader from "./Components/Loader";
+import Loader from "./components/Loader";
 
 export default function NextIftaar() {
     const host = "Ibnet";

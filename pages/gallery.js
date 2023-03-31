@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Gallery.module.css";
 import AWS from "aws-sdk";
+import Modal from "./components/Modal";
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
@@ -12,6 +13,7 @@ const s3 = new AWS.S3({
 
 export default function Gallery() {
     const [images, setImages] = useState([]);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         const getImages = async () => {
@@ -37,10 +39,18 @@ export default function Gallery() {
         const params = {
             Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
             Key: key,
-            Expires: 60 * 5 // URL expires in 5 minutes
+            Expires: 60 * 5, // URL expires in 5 minutes
         };
-        return await s3.getSignedUrlPromise('getObject', params);
-    }
+        return await s3.getSignedUrlPromise("getObject", params);
+    };
+
+    const handleImageClick = (url) => {
+        setSelectedImage(url);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedImage(null);
+    };
 
     return (
         <div className={styles.container}>
@@ -55,17 +65,20 @@ export default function Gallery() {
 
                 <div className={styles.grid}>
                     {images.map((url) => (
-                        <div key={url} className={styles.card}>
-                            <Image
-                                src={url}
-                                alt={"image"}
-                                width={300}
-                                height={200}
-                            />
+                        <div
+                            key={url}
+                            className={styles.card}
+                            onClick={() => handleImageClick(url)}
+                        >
+                            <Image src={url} alt={"image"} width={300} height={200}/>
                         </div>
                     ))}
                 </div>
             </main>
+
+            {selectedImage && (
+                <Modal onClose={handleCloseModal} imageUrl={selectedImage}/>
+            )}
         </div>
     );
 }
