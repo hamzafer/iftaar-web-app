@@ -23,7 +23,8 @@ export default function Gallery() {
                     .promise();
 
                 const imageKeys = response.Contents.map((obj) => obj.Key);
-                setImages(imageKeys);
+                const urls = await Promise.all(imageKeys.map(getSignedUrl));
+                setImages(urls);
             } catch (error) {
                 console.log(error);
             }
@@ -31,6 +32,15 @@ export default function Gallery() {
 
         getImages();
     }, []);
+
+    const getSignedUrl = async (key) => {
+        const params = {
+            Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
+            Key: key,
+            Expires: 60 * 5 // URL expires in 5 minutes
+        };
+        return await s3.getSignedUrlPromise('getObject', params);
+    }
 
     return (
         <div className={styles.container}>
@@ -44,11 +54,11 @@ export default function Gallery() {
                 <h1 className={styles.title}>Gallery</h1>
 
                 <div className={styles.grid}>
-                    {images.map((imageKey) => (
-                        <div key={imageKey} className={styles.card}>
+                    {images.map((url) => (
+                        <div key={url} className={styles.card}>
                             <Image
-                                src={`https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${imageKey}`}
-                                alt={imageKey}
+                                src={url}
+                                alt={"image"}
                                 width={300}
                                 height={200}
                             />
