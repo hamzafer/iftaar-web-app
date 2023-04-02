@@ -1,6 +1,6 @@
 const iftaarData = [
-    {id: 1, name: 'Saad', date: 'TBD', location: 'Chiniot', done: false},
-    {id: 2, name: 'Ibnet', date: 'April 1, 2023', location: `Ibnet's home`, done: false},
+    {id: 1, name: 'Saad', date: 'April 3, 2023', location: 'Chiniot', done: false},
+    {id: 2, name: 'Ibnet', date: 'April 1, 2023', location: `Ibnet's home`, done: true},
     {id: 3, name: 'Sohaib', date: 'March 28, 2023', location: `Sohaib's home`, done: true},
     {id: 4, name: 'Chuchu', date: 'TBD', location: `Chuchu's home`, done: false},
     {id: 5, name: 'Ahnuf + Munir', date: 'TBD', location: `TBD`, done: false},
