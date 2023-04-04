@@ -7,8 +7,8 @@ import Image from "next/image";
 import Loader from "./components/Loader";
 
 export default function NextIftaar() {
-    const host = "Saad";
-    const image = "/Saad.jpg";
+    const host = "Chuchu";
+    const image = `/${host}.jpg`;
     const [iftaarData, setIftaarData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
