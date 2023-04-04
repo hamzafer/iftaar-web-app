@@ -16,6 +16,7 @@ export default function Timeline() {
             try {
                 const response = await fetch('/api/iftaarData');
                 const data = await response.json();
+                data.sort((a, b) => new Date(a.date) - new Date(b.date));
                 setIftaarData(data);
 
                 const now = new Date();
@@ -69,7 +70,7 @@ export default function Timeline() {
                                             nextIftaarIndex === index ? stylesT["row-next"] : null
                                     }
                                 >
-                                    <td style={{border: '1px solid white', padding: '10px'}}>{id}</td>
+                                    <td style={{border: '1px solid white', padding: '10px'}}>{index + 1}</td>
                                     <td style={{border: '1px solid white', padding: '10px'}}>{name}</td>
                                     <td style={{border: '1px solid white', padding: '10px'}}>{date}</td>
                                     <td style={{border: '1px solid white', padding: '10px'}}>{location}</td>
@@ -84,7 +85,7 @@ export default function Timeline() {
                                 marginTop: "1rem"
                             }}
                         >
-                            <div style={{ display: "flex", alignItems: "center" }}>
+                            <div style={{display: "flex", alignItems: "center"}}>
                                 <div
                                     style={{
                                         width: "1rem",
@@ -95,7 +96,7 @@ export default function Timeline() {
                                 />
                                 <span>Next iftaar</span>
                             </div>
-                            <div style={{ display: "flex", alignItems: "center", marginLeft: "1rem" }}>
+                            <div style={{display: "flex", alignItems: "center", marginLeft: "1rem"}}>
                                 <div
                                     style={{
                                         width: "1rem",
