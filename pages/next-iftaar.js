@@ -7,31 +7,41 @@ import Image from "next/image";
 import Loader from "./components/Loader";
 
 export default function NextIftaar() {
-    const host = "Chuchu";
-    const image = `/${host}.jpg`;
     const [iftaarData, setIftaarData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    const [nextIftaar, setNextIftaar] = useState("");
 
     useEffect(() => {
         async function fetchIftaarData() {
             try {
-                const response = await fetch('/api/iftaarData');
+                const response = await fetch("/api/iftaarData");
                 const data = await response.json();
+                data.sort((a, b) => new Date(a.date) - new Date(b.date));
                 setIftaarData(data);
                 setIsLoading(false);
             } catch (error) {
-                console.error('Error fetching iftaar data:', error);
+                console.error("Error fetching iftaar data:", error);
             }
         }
 
         fetchIftaarData();
     }, []);
 
-    const hostData = iftaarData.find((data) => data.name === host);
+    useEffect(() => {
+        const today = new Date();
+        const nextIftaarData = iftaarData.find((data) => {
+            const date = new Date(data.date);
+            date.setHours(0, 0, 0, 0);
+            return date >= today;
+        });
+        if (nextIftaarData) {
+            setNextIftaar(nextIftaarData.name);
+        } else {
+            setNextIftaar("");
+        }
+    }, [iftaarData]);
+
+    const hostData = iftaarData.find((data) => data.name === nextIftaar);
     const hostDate = hostData?.date ?? "TBD";
     const date = new Date(hostDate);
     const dayOfWeek = date.getDay();
@@ -50,9 +60,7 @@ export default function NextIftaar() {
                         <p>Home</p>
                     </span>
             </Link>
-            {isLoading ? (
-                    <Loader/>
-                ) :
+            {isLoading ? (<Loader/>) : (
                 <div
                     style={{
                         display: "flex",
@@ -62,19 +70,28 @@ export default function NextIftaar() {
                     }}
                 >
                     <h1>Next Iftaar : {hostDate} | {day}</h1>
-                    <Image
-                        src={image}
-                        alt="Next Iftaar"
-                        width={200}
-                        height={200}
-                        style={{borderRadius: "50%", width: "200px", height: "200px"}}
-                    />
-                    <p>{host}</p>
-
+                    {nextIftaar ? (
+                        <div>
+                            {nextIftaar.split(" + ").map((name) => (
+                                <Image
+                                    key={name}
+                                    src={`/${name}.jpg`}
+                                    alt={name}
+                                    width={200}
+                                    height={200}
+                                    style={{borderRadius: "50%", width: "200px", height: "200px"}}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No upcoming iftaar scheduled yet.</p>
+                    )}
+                    {nextIftaar && <p>{nextIftaar}</p>}
                     <Link href="/timeline">
                         <p>- click here for the timeline -</p>
                     </Link>
-                </div>}
+                </div>
+            )}
             <Footer/>
         </div>
     );
