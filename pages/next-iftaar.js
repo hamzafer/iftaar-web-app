@@ -41,7 +41,6 @@ export default function NextIftaar() {
         }
     }, [iftaarData]);
 
-    const image = `/${nextIftaar}.jpg`;
     const hostData = iftaarData.find((data) => data.name === nextIftaar);
     const hostDate = hostData?.date ?? "TBD";
     const date = new Date(hostDate);
@@ -72,13 +71,18 @@ export default function NextIftaar() {
                 >
                     <h1>Next Iftaar : {hostDate} | {day}</h1>
                     {nextIftaar ? (
-                        <Image
-                            src={image}
-                            alt="Next Iftaar"
-                            width={200}
-                            height={200}
-                            style={{borderRadius: "50%", width: "200px", height: "200px"}}
-                        />
+                        <div>
+                            {nextIftaar.split(" + ").map((name) => (
+                                <Image
+                                    key={name}
+                                    src={`/${name}.jpg`}
+                                    alt={name}
+                                    width={200}
+                                    height={200}
+                                    style={{borderRadius: "50%", width: "200px", height: "200px"}}
+                                />
+                            ))}
+                        </div>
                     ) : (
                         <p>No upcoming iftaar scheduled yet.</p>
                     )}
