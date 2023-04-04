@@ -77,6 +77,36 @@ export default function Timeline() {
                             ))}
                             </tbody>
                         </table>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: "1rem"
+                            }}
+                        >
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <div
+                                    style={{
+                                        width: "1rem",
+                                        height: "1rem",
+                                        backgroundColor: "#d70354",
+                                        marginRight: "0.5rem"
+                                    }}
+                                />
+                                <span>Next iftaar</span>
+                            </div>
+                            <div style={{ display: "flex", alignItems: "center", marginLeft: "1rem" }}>
+                                <div
+                                    style={{
+                                        width: "1rem",
+                                        height: "1rem",
+                                        backgroundColor: "#3a86ff",
+                                        marginRight: "0.5rem"
+                                    }}
+                                />
+                                <span>Done</span>
+                            </div>
+                        </div>
                     </div>
                 </div>}
             <br/>
