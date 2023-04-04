@@ -5,3 +5,15 @@
 .row-not-done {
     background-color: #f19d97;
 }
+
+.row-next {
+    background-color: #d70354;
+    color: white;
+    /*animation: blink 1s infinite;*/
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
+}

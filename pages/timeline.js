@@ -9,6 +9,7 @@ import Loader from "./components/Loader";
 export default function Timeline() {
     const [iftaarData, setIftaarData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [nextIftaarIndex, setNextIftaarIndex] = useState(-1);
 
     useEffect(() => {
         async function fetchIftaarData() {
@@ -16,6 +17,13 @@ export default function Timeline() {
                 const response = await fetch('/api/iftaarData');
                 const data = await response.json();
                 setIftaarData(data);
+
+                const now = new Date();
+                const nextIftaarIndex = data.findIndex(
+                    ({date}) => new Date(date) > now
+                );
+                setNextIftaarIndex(nextIftaarIndex);
+
                 setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching iftaar data:', error);
@@ -53,8 +61,14 @@ export default function Timeline() {
                             </tr>
                             </thead>
                             <tbody>
-                            {iftaarData.map(({id, name, date, location, done}) => (
-                                <tr key={name} className={done ? stylesT["row-done"] : null}>
+                            {iftaarData.map(({id, name, date, location, done}, index) => (
+                                <tr
+                                    key={name}
+                                    className={
+                                        done ? stylesT["row-done"] :
+                                            nextIftaarIndex === index ? stylesT["row-next"] : null
+                                    }
+                                >
                                     <td style={{border: '1px solid white', padding: '10px'}}>{id}</td>
                                     <td style={{border: '1px solid white', padding: '10px'}}>{name}</td>
                                     <td style={{border: '1px solid white', padding: '10px'}}>{date}</td>
@@ -63,6 +77,36 @@ export default function Timeline() {
                             ))}
                             </tbody>
                         </table>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: "1rem"
+                            }}
+                        >
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <div
+                                    style={{
+                                        width: "1rem",
+                                        height: "1rem",
+                                        backgroundColor: "#d70354",
+                                        marginRight: "0.5rem"
+                                    }}
+                                />
+                                <span>Next iftaar</span>
+                            </div>
+                            <div style={{ display: "flex", alignItems: "center", marginLeft: "1rem" }}>
+                                <div
+                                    style={{
+                                        width: "1rem",
+                                        height: "1rem",
+                                        backgroundColor: "#3a86ff",
+                                        marginRight: "0.5rem"
+                                    }}
+                                />
+                                <span>Done</span>
+                            </div>
+                        </div>
                     </div>
                 </div>}
             <br/>

@@ -108,6 +108,18 @@
   margin-left: 0.5rem;
 }
 
+.new {
+  background-color: #2d36e8;
+  color: white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

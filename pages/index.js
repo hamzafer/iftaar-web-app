@@ -58,10 +58,10 @@ export default function Home() {
                         <h2>Gallery &rarr;</h2>
                         <p>See the dump!</p>
                         <br/>
-                        {newFeature && <span
-                            style={{backgroundColor: "blue", color: "white", padding: "5px", borderRadius: "5px"}}>
-                            NEW
-                        </span>}
+                        {newFeature &&
+                            <span className={styles["new"]}>
+                                NEW
+                            </span>}
                     </Link>
                 </div>
             </main>
