@@ -15,12 +15,18 @@ A simple web app built with Next.js to display the timeline of Iftaar schedules 
 3. Run the app using `npm run dev` or `yarn dev`
 4. Access the app at `http://localhost:3000`
 
+## Or Use Docker
+1. `docker build -t iftaar-app`
+2. `docker run -p 3000:3000 -d iftaar-app`
+3. Access the app at `http://localhost:3000`
+
 ## Technologies
 
 - Next.js
 - AWS
 - Vercel
 - Mongo
+- Docker
 
 ## Contributors
 
