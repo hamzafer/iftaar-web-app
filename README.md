@@ -18,10 +18,9 @@ A simple web app built with Next.js to display the timeline of Iftaar schedules 
 ## Technologies
 
 - Next.js
-- CSS Modules
-- React
-- Head
-- Image
+- AWS
+- Vercel
+- Mongo
 
 ## Contributors
 
